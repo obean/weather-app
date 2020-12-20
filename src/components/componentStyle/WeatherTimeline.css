@@ -1,0 +1,10 @@
+#weatherTimeline {
+  grid-template-columns:  auto auto auto auto auto auto;
+  display: inline-grid;
+  grid-gap: 1px;
+}
+
+.day-weather-div {
+  border: 1px solid white;
+  padding: 1em;
+}

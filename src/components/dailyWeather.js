@@ -1,10 +1,17 @@
 import React, {useEffect, useState} from 'react'
 
+
+
 function DayWeather(props) {
 
-console.log(props.weather)
 
-return (null)
+
+
+return (
+<div className="day-weather-div">
+<h2>{props.dayOfTheWeek}</h2>
+</div>
+)
 }
 
 
