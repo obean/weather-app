@@ -8,3 +8,7 @@
   border: 1px solid white;
   padding: 1em;
 }
+
+.day-of-the-week-title{
+  align-self: auto
+}

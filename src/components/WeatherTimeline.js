@@ -5,9 +5,9 @@ import './componentStyle/WeatherTimeline.css'
 function WeatherTimeline(props) {
   const [availDays, setAvailDays] = useState([]);
 
-  useEffect(() => {
-    console.log(Object.keys(props.weatherItems))
-  }, [])
+  // useEffect(() => {
+  //   console.log(Object.keys(props.weatherItems))
+  // }, [])
 
   const dateNumToString = (dateNum) => {
     //lets swap this to a switch statement when we have sorted out the other kinks
@@ -21,7 +21,11 @@ function WeatherTimeline(props) {
      {Object.keys(props.weatherItems).map(weatherItemKey => {
        return <DayWeather 
                 weather={props.weatherItems[weatherItemKey]}
-                dayOfTheWeek={dateNumToString(weatherItemKey)} />
+                dayOfTheWeek={dateNumToString(weatherItemKey)} 
+                toggleDaySynopsisShowing={props.toggleDaySynopsisShowing}
+                setSelectedDay={props.setSelectedDay}
+                // onClick={() => console.log("potato")}//props.toggleDaySynopsisShowing()}
+              />
      })}
 
     </div>
