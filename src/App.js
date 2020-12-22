@@ -14,8 +14,9 @@ function App() {
     const openweatherData = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=London&mode=json&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric`)
       .then( async openweatherData => {
         const parsedData = await openweatherData.json()
-        sortWeatherObjectsByDate(parsedData)
         console.log(parsedData)
+        sortWeatherObjectsByDate(parsedData)
+        
       })
   }
     //  weather api not being used. keeping the call info incase I decide to use it later for further away dates
@@ -33,15 +34,21 @@ function App() {
     
   }, [])
 
+  const formatYearKey = (dayOne, i) => {
+    let nextDate = new Date(new Date().setDate(dayOne.getDate() + i)).toLocaleDateString().split('/')
+    return nextDate.reverse().join('-')
+  }
+
   const sortWeatherObjectsByDate = (weatherData) => {
     const days = {}
-    let firstEntryDay = new Date(weatherData.list[0].dt_txt).getDay()
+    let firstEntryDay = new Date(weatherData.list[0].dt_txt)
     for(let i = 0; i < (weatherData.list.length/8)+1; i++ ){
-      // test this tomorrow, you should get object with keys starting at 1 ending with 5, i know eval is bad. but it works here
-      eval("days[" + (firstEntryDay + i) + "] = { weather: [], main: []}" )
+      eval(`days["${formatYearKey(firstEntryDay, i)}"]= { weather: [], main: [], nextWeek: false}`)
     }
+
+    console.log(days)
     weatherData.list.map(dataEntry => {
-      let dayNum = (new Date(dataEntry.dt*1000).getDay())
+      let dayNum = formatYearKey(new Date(dataEntry.dt_txt), 0)
       days[dayNum].weather.push(dataEntry.weather)
       days[dayNum].main.push(dataEntry.main)
       
