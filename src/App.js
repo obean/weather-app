@@ -43,15 +43,13 @@ function App() {
     const days = {}
     let firstEntryDay = new Date(weatherData.list[0].dt_txt)
     for(let i = 0; i < (weatherData.list.length/8)+1; i++ ){
-      eval(`days["${formatYearKey(firstEntryDay, i)}"]= { weather: [], main: [], nextWeek: false}`)
+      eval(`days["${formatYearKey(firstEntryDay, i)}"]= { data: []}`)
     }
 
     console.log(days)
     weatherData.list.map(dataEntry => {
       let dayNum = formatYearKey(new Date(dataEntry.dt_txt), 0)
-      days[dayNum].weather.push(dataEntry.weather)
-      days[dayNum].main.push(dataEntry.main)
-      
+      days[dayNum].data.push(dataEntry)
     })
     setWeather(days)
   }
@@ -63,15 +61,17 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-   
-      <WeatherSynopsisModal
-        hide={toggleDaySynopsisShowing}
+    
+     {selectedDay && <WeatherSynopsisModal
+        hide={toggleDaySynopsisShowing}//
         showing={daySynopsisShowing}
         toggleDaySynopsisShowing={toggleDaySynopsisShowing}
         setSelectedDay={setSelectedDay}
         selectedDay={selectedDay}
-      />
-      {weather &&  <WeatherTimeline
+        weather={weather[selectedDay]}
+      />}
+      {weather &&
+       <WeatherTimeline
                       weatherItems={weather}
                       toggleDaySynopsisShowing={toggleDaySynopsisShowing}
                       selectedDay={selectedDay}
