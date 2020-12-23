@@ -46,6 +46,10 @@
   height: 100vh;
   background-color: #000;
   opacity: .5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-wrapper {
@@ -58,6 +62,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
+  align-content: center;
 }
 
 .modal {
@@ -66,13 +71,15 @@
   position: relative;
   margin: 1.75rem auto;
   border-radius: 3px;
-  max-width: 500px;
-  padding: 2rem;
+  align-content: center;
+  
+  /* max-width: 750px; this was 500px */
 }
 
 .modal-header {
   display: flex;
   justify-content: flex-end;
+  align-content: center;
 }
 
 .modal-close-button {

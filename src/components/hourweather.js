@@ -8,10 +8,31 @@ const HourWeather = (props) => {
   }
   console.log(getEntryTime(props.weather.dt_txt))
   return (
-    <div className="day-weather-div">
+    <div className="hour-weather-div">
       <h1>{getEntryTime(props.weather.dt_txt)}</h1>
-      <h6>{props.weather.main.temp}</h6>
-      <img src={` http://openweathermap.org/img/wn/${props.weather.weather[0].icon}.png`}/>
+      
+      <div className="logo-description">
+        <img className="weather-icon" src={` http://openweathermap.org/img/wn/${props.weather.weather[0].icon}.png`}/>
+        <p>{props.weather.weather[0].description}</p>
+      </div>
+      <br></br>
+      <div className="temp-grid">
+        <div>
+          <span className="temp-grid-title">Av</span>
+          <span className="temp-grid-value">{props.weather.main.temp}°C </span> 
+        </div>
+        <div>
+          <span className="temp-grid-title">Max</span>
+          <span className="temp-grid-value">{props.weather.main.temp_max}°C</span>
+        </div>
+        <div>
+          <span className="temp-grid-title">Min</span>
+          <span className="temp-grid-value">{props.weather.main.temp_min}°C </span>
+        </div>
+        
+      </div>
+      <br></br>
+  
     </div>
   )
 }

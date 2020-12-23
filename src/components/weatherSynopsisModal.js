@@ -20,7 +20,6 @@ console.log(showing)
                   </div>
                   <div><h1>{selectedDay}</h1></div>
                   <div className="timeslot-weather">
-                <p classname="temp">{weather.data[0].main.temp}°</p>
                {weather &&
                 <HourWeatherTimeline
                   weather={weather}

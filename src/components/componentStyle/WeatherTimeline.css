@@ -1,14 +1,63 @@
 #weatherTimeline {
-  grid-template-columns:  auto auto auto auto auto auto;
+  grid-template-columns:  auto auto auto auto auto auto auto auto ;
   display: inline-grid;
   grid-gap: 1px;
+}
+
+.hour-weather-div {
+  border: 1px solid #262e42 ;
+  border-radius: 5px;
+  margin: 0.1em;
+
 }
 
 .day-weather-div {
   border: 1px solid white;
   padding: 1em;
+  width:100px;
 }
 
 .day-of-the-week-title{
   align-self: auto
+}
+
+.hour-weather-div {
+  align-content: center;
+  align-items: center;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.temp-grid {
+  grid-template-columns:  auto  ;
+  display: grid;
+  /* grid-auto-rows: minmax(min-content, 1em); */
+  height: relative;
+  /* grid-gap: 1px; */
+  row-gap: 0;
+}
+
+.temp-grid-value{
+  float: right;
+}
+
+.timeslot-weather{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-icon{
+  margin: 0;
 }
