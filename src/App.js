@@ -29,6 +29,15 @@ function App() {
       })
   }
 
+  const getSummaryForecast = async () => {
+    const summaryForecast = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,alerts,&appid=${process.env.REACT_APP_OPENWEATHER_API}`)
+    .then( async summaryForecast => {
+      const parsedData = await  summaryForecast.json();
+      console.log(parsedData)
+    })
+  }
+  getSummaryForecast();
+
   useEffect(() => {
     getFourDayWeather();
     
