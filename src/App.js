@@ -54,13 +54,26 @@ function App() {
                    .join('-')
   }
 
-  const sortWeatherObjectsByDate = (weatherData) => {
-     const days = createDaysObject(new Date(weatherData.list[0].dt_txt))
+  const addAverageWeather = (weather, days) => {
+    for(let i = 0; i < 6; i++) {
+      let date = new Date(weather.daily[i].dt*1000)
+      days[formatYearKey(date, 0)].avData.push(weather.daily[i])
+    }
+    return days
+  }
+
+  const sortWeatherObjectsByDate = async (weatherData) => {
+     let days = createDaysObject(new Date(weatherData.list[0].dt_txt))
 
     weatherData.list.map(dataEntry => {
       let dayNum = formatYearKey(new Date(dataEntry.dt_txt), 0)
       days[dayNum].data.push(dataEntry)
     })
+
+    const avWeather = await getSummaryForecast();
+    days = addAverageWeather(avWeather, days)
+
+    console.log(days)
     setWeather(days)
   }
 
