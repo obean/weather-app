@@ -6,9 +6,10 @@ import WeatherSynopsisModal from './components/weatherSynopsisModal.js'
 import './App.css';
 
 function App() {
-  const [weather, setWeather] = useState()
+  const [weather, setWeather] = useState();
   const {daySynopsisShowing, toggleDaySynopsisShowing} = useDaySynopsisModal();
   const [selectedDay, setSelectedDay] = useState();
+  const [averageWeather, setAverageWeather] = useState();
 
   const getFourDayWeather = async () => {
     const openweatherData = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=London&mode=json&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric`)
@@ -30,32 +31,32 @@ function App() {
   }
 
   const getSummaryForecast = async () => {
-    const summaryForecast = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,alerts,&appid=${process.env.REACT_APP_OPENWEATHER_API}`)
+    const summaryForecast = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=51.3021843&lon=-0.4941025&units=metric&exclude=hourly,alerts,&appid=${process.env.REACT_APP_OPENWEATHER_API}`)
     .then( async summaryForecast => {
       const parsedData = await  summaryForecast.json();
-      console.log(parsedData)
+      return parsedData
     })
+    return await summaryForecast
   }
-  getSummaryForecast();
+  
 
-  useEffect(() => {
+  useEffect(async () => {
     getFourDayWeather();
-    
+    console.log( await getSummaryForecast())
   }, [])
 
   const formatYearKey = (dayOne, i) => {
-    let nextDate = new Date(new Date().setDate(dayOne.getDate() + i)).toLocaleDateString().split('/')
-    return nextDate.reverse().join('-')
+    let newMilliseconds = i * 86400000
+    let nextDate = new Date(dayOne.valueOf() + newMilliseconds)
+    return nextDate.toLocaleDateString()
+                   .split('/')
+                   .reverse()
+                   .join('-')
   }
 
   const sortWeatherObjectsByDate = (weatherData) => {
-    const days = {}
-    let firstEntryDay = new Date(weatherData.list[0].dt_txt)
-    for(let i = 0; i < (weatherData.list.length/8)+1; i++ ){
-      eval(`days["${formatYearKey(firstEntryDay, i)}"]= { data: []}`)
-    }
+     const days = createDaysObject(new Date(weatherData.list[0].dt_txt))
 
-    console.log(days)
     weatherData.list.map(dataEntry => {
       let dayNum = formatYearKey(new Date(dataEntry.dt_txt), 0)
       days[dayNum].data.push(dataEntry)
@@ -63,7 +64,13 @@ function App() {
     setWeather(days)
   }
 
- 
+  const createDaysObject = (firstDay) => {
+    const days = {}
+    for(let i = 0; i < 6; i++ ){
+      eval(`days["${formatYearKey(firstDay, i)}"]= { data: [], avData: []}`)
+    }
+    return days
+  }
 
  
 
